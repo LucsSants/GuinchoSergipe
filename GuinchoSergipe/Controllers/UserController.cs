@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GuinchoSergipe.DTOs;
 using GuinchoSergipe.Models;
+using GuinchoSergipe.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,22 +11,24 @@ namespace GuinchoSergipe.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private IMapper _mapper;
-    private UserManager<UserModel> _userMamager;
+    private UserService _userService;
 
-    public UserController(IMapper mapper, UserManager<UserModel> userMamager)
+    public UserController(UserService userService)
     {
-        _mapper = mapper;
-        _userMamager = userMamager;
+        _userService = userService;
     }
 
-    [HttpPost]
+    [HttpPost("cadastro")]
     public async Task<IActionResult> CreateUsuario( CreateUserDto userDto)
     {
-       UserModel user = _mapper.Map<UserModel>(userDto);
-        IdentityResult resultado = await _userMamager.CreateAsync(user, userDto.Password);
+        await _userService.Cadastra(userDto);
+        return Ok("Usuario Cadastrado");
+    }
 
-        if (resultado.Succeeded) return Ok("Usuario Cadastrado");
-        throw new ApplicationException("Falha ao cadastrar usuario");
+    [HttpPost("login")]
+    public async Task<IActionResult>  Login( LoginUserDto dto)
+    {
+        var token = await _userService.Login(dto);
+        return Ok(new {token = token, email = dto.Email});
     }
 }

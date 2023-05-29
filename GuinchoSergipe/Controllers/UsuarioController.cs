@@ -2,6 +2,7 @@
 using GuinchoSergipe.Data;
 using GuinchoSergipe.DTOs;
 using GuinchoSergipe.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuinchoSergipe.Controllers;
@@ -36,7 +37,7 @@ public class UsuarioController : ControllerBase
         var usuarioDto = _mapper.Map<ReadUsuarioDto>(usuario);
         return Ok(usuarioDto);
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IEnumerable<ReadUsuarioDto> GetUsuarios([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
