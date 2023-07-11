@@ -21,15 +21,21 @@ public class UserService
     }
 
 
-    public async Task Cadastra(CreateUserDto userDto)
+    public async Task<String> CadastraUsuario(CreateUserDto userDto)
     {
         UserModel user = _mapper.Map<UserModel>(userDto);
 
         await _userManager.SetUserNameAsync(user, userDto.Email);
         IdentityResult resultado = await _userManager.CreateAsync(user, userDto.Password);
 
-        if (!resultado.Succeeded) { 
-        throw new ApplicationException("Falha ao cadastrar usuario");
+        if (!resultado.Succeeded) {
+            List<IdentityError> errorList = resultado.Errors.ToList();
+            var errors = string.Join(", ", errorList.Select(e => e.Description));
+            return errors;
+        }else
+        {
+            await _userManager.AddToRoleAsync(user, "CLIENTE") ;
+            return "Usuario Cadastrado!!!!!!!!";
         }
     }
 

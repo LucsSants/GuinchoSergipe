@@ -10,8 +10,20 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllHeaders",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
 var connectionString = builder.Configuration.GetConnectionString("GunichoConnection");
 
 builder.Services.AddDbContext<UsuarioContext>(opts =>
@@ -26,12 +38,14 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<TokenService>();
 
 
+
 builder.Services
     .AddIdentity<UserModel, IdentityRole>()
     .AddEntityFrameworkStores<UserDbContext>()
     .AddDefaultTokenProviders();
 
 // Add services to the container.
+
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -64,8 +78,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowAllHeaders");
 
 app.UseHttpsRedirection();
+app.UseRouting();
+
 
 app.UseAuthentication();
 app.UseAuthorization();

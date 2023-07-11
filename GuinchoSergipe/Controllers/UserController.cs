@@ -2,10 +2,12 @@
 using GuinchoSergipe.DTOs;
 using GuinchoSergipe.Models;
 using GuinchoSergipe.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuinchoSergipe.Controllers;
+
 
 [ApiController]
 [Route("[controller]")]
@@ -21,8 +23,15 @@ public class UserController : ControllerBase
     [HttpPost("cadastro")]
     public async Task<IActionResult> CreateUsuario( CreateUserDto userDto)
     {
-        await _userService.Cadastra(userDto);
-        return Ok("Usuario Cadastrado");
+        var result = await _userService.CadastraUsuario(userDto);
+        if (result != "Usuario Cadastrado!!!!!!!!")
+        {
+            return BadRequest(result);
+        }
+        
+        return Ok(result);
+
+       
     }
 
     [HttpPost("login")]
