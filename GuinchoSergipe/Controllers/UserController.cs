@@ -58,11 +58,22 @@ public class UserController : ControllerBase
         return Ok(new {token = token, email = dto.Email});
     }
 
-    [HttpGet("{email}")]
-    public async Task<IActionResult> GetTipoVeiculoById(string email)
+    [HttpGet("email/{email}")]
+    public async Task<IActionResult> GetUserByEmail(string email)
     {
         var result = await _userService.GetUserByEmail(email);
         if (result == null) {
+            return NotFound("Usuário não encontrado!");
+        }
+        return Ok(result);
+    }
+
+    [HttpGet("id/{id}")]
+    public async Task<IActionResult> GetUserById(string id)
+    {
+        var result = await _userService.GetUserById(id);
+        if (result == null)
+        {
             return NotFound("Usuário não encontrado!");
         }
         return Ok(result);

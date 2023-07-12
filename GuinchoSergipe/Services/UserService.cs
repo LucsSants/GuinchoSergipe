@@ -105,6 +105,18 @@ public class UserService
         
     }
 
+    public async Task<ReadUserDto> GetUserById(string Id)
+    {
+        var resultado = await _userManager.FindByIdAsync(Id);
+        if (resultado != null)
+        {
+            var usuarioDto = _mapper.Map<ReadUserDto>(resultado);
+            return usuarioDto;
+        }
+        return null;
+
+    }
+
     public async Task<List<ReadUserDto>> GetGuinchos()
     {
         List<UserModel> resultado = await _userManager.Users.Where(user => user.isGuincho == true).ToListAsync();
