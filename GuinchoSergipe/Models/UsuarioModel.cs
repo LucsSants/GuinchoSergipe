@@ -20,10 +20,4 @@ public class UsuarioModel
     [MaxLength(100, ErrorMessage = "Nome deve ter entre 5 e 100 caracteres!")]
     public string Nome { get; set; }
 
-    public int EnderecoId { get; set; }
-
-    public virtual EnderecoModel Endereco { get; set; }
-
-    public virtual ICollection<VeiculoModel> Veiculos { get; set; }
-
 }

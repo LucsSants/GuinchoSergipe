@@ -3,6 +3,7 @@ using System;
 using GuinchoSergipe.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GuinchoSergipe.Migrations.UserDb
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230711105731_Recriando3")]
+    partial class Recriando3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +53,7 @@ namespace GuinchoSergipe.Migrations.UserDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Enderecos");
+                    b.ToTable("EnderecoModel");
                 });
 
             modelBuilder.Entity("GuinchoSergipe.Models.TipoVeiculoModel", b =>
@@ -65,7 +68,7 @@ namespace GuinchoSergipe.Migrations.UserDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("TiposVeiculo");
+                    b.ToTable("TipoVeiculoModel");
                 });
 
             modelBuilder.Entity("GuinchoSergipe.Models.UserModel", b =>
@@ -91,7 +94,7 @@ namespace GuinchoSergipe.Migrations.UserDb
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("EnderecoId")
+                    b.Property<int>("EnderecoId")
                         .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
@@ -132,12 +135,6 @@ namespace GuinchoSergipe.Migrations.UserDb
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
-                    b.Property<bool?>("isDisponivel")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool?>("isGuincho")
-                        .HasColumnType("tinyint(1)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EnderecoId")
@@ -151,28 +148,6 @@ namespace GuinchoSergipe.Migrations.UserDb
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("GuinchoSergipe.Models.User_TipoVeiculo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("TipoVeiculoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TipoVeiculoId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("User_TiposVeiculo");
                 });
 
             modelBuilder.Entity("GuinchoSergipe.Models.VeiculoModel", b =>
@@ -213,7 +188,7 @@ namespace GuinchoSergipe.Migrations.UserDb
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Veiculos");
+                    b.ToTable("VeiculoModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -348,28 +323,11 @@ namespace GuinchoSergipe.Migrations.UserDb
                 {
                     b.HasOne("GuinchoSergipe.Models.EnderecoModel", "Endereco")
                         .WithOne("User")
-                        .HasForeignKey("GuinchoSergipe.Models.UserModel", "EnderecoId");
+                        .HasForeignKey("GuinchoSergipe.Models.UserModel", "EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Endereco");
-                });
-
-            modelBuilder.Entity("GuinchoSergipe.Models.User_TipoVeiculo", b =>
-                {
-                    b.HasOne("GuinchoSergipe.Models.TipoVeiculoModel", "TipoVeiculo")
-                        .WithMany("User_TiposVeiculo")
-                        .HasForeignKey("TipoVeiculoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GuinchoSergipe.Models.UserModel", "User")
-                        .WithMany("User_TiposVeiculo")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TipoVeiculo");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GuinchoSergipe.Models.VeiculoModel", b =>
@@ -448,15 +406,11 @@ namespace GuinchoSergipe.Migrations.UserDb
 
             modelBuilder.Entity("GuinchoSergipe.Models.TipoVeiculoModel", b =>
                 {
-                    b.Navigation("User_TiposVeiculo");
-
                     b.Navigation("Veiculos");
                 });
 
             modelBuilder.Entity("GuinchoSergipe.Models.UserModel", b =>
                 {
-                    b.Navigation("User_TiposVeiculo");
-
                     b.Navigation("Veiculos");
                 });
 #pragma warning restore 612, 618

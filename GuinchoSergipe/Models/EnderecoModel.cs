@@ -24,6 +24,5 @@ public class EnderecoModel
     [MinLength(8, ErrorMessage = "CEP deve ter no mínimo 8 dígitos")]
     [MaxLength(8, ErrorMessage = "CEP deve ter no máximo 8 dígitos")]
     public string CEP { get; set; }
-
-    public virtual UsuarioModel Usuario { get; set; }
+    public virtual UserModel User { get; set; }
 }

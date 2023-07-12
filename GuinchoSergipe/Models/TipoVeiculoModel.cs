@@ -12,4 +12,6 @@ public class TipoVeiculoModel
     public string TipoNome { get; set; }
 
     public virtual ICollection<VeiculoModel> Veiculos { get; set; }
+
+    public virtual ICollection<User_TipoVeiculo> User_TiposVeiculo { get; set; }
 }

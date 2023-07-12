@@ -10,8 +10,17 @@ public class UserModel : IdentityUser
     public string Cpf { get; set; }
 
     [Required(ErrorMessage = "Campo Nome é obrigatório")]
-    [StringLength(100, ErrorMessage = "Nome deve ter entre até 100 caracteres!")]
+    [StringLength(100, ErrorMessage = "Nome deve ter entre até 100 caracteres!")] 
     public string Nome { get; set; }
-
+    
     public UserModel(): base() { }
+    public int? EnderecoId { get; set; }
+    public virtual EnderecoModel Endereco { get; set; }
+    public virtual ICollection<VeiculoModel> Veiculos { get; set; }
+
+    public bool? isGuincho { get; set; }
+
+    public bool? isDisponivel { get; set; }
+
+    public virtual ICollection<User_TipoVeiculo> User_TiposVeiculo { get; set; }
 }

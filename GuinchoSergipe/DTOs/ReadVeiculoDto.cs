@@ -11,7 +11,7 @@ namespace GuinchoSergipe.DTOs
         public string Placa { get; set; }
         public string Cor { get; set; }
         public int Ano { get; set; }
-        public int UsuarioId { get; set; }
+        public String UserId { get; set; }
 
         public ReadTipoVeiculoDto TipoVeiculo { get; set; }
     }

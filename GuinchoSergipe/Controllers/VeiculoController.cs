@@ -3,6 +3,8 @@ using GuinchoSergipe.Data;
 using GuinchoSergipe.DTOs;
 using GuinchoSergipe.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace GuinchoSergipe.Controllers;
 
@@ -11,10 +13,10 @@ namespace GuinchoSergipe.Controllers;
 [Route("[controller]")]
 public class VeiculoController : ControllerBase
 {
-    private UsuarioContext _context;
+    private UserDbContext _context;
     private IMapper _mapper;
 
-    public VeiculoController(UsuarioContext context, IMapper mapper)
+    public VeiculoController(UserDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -35,6 +37,15 @@ public class VeiculoController : ControllerBase
         VeiculoModel veiculo = _context.Veiculos.FirstOrDefault(veiculo => veiculo.Id == id);
         if (veiculo == null) { return NotFound(); }
         ReadVeiculoDto veiculoDto = _mapper.Map<ReadVeiculoDto>(veiculo);
+        return Ok(veiculoDto);
+    }
+
+    [HttpGet("user/{id}")]
+    public IActionResult GetVeiculoByUserId(string id)
+    {
+        List<VeiculoModel> veiculo = _context.Veiculos.Where(v=> v.UserId == id).ToList();
+        if (veiculo == null) { return NotFound("usuario não encontrado"); }
+        var veiculoDto = _mapper.Map<List<ReadVeiculoDto>>(veiculo);
         return Ok(veiculoDto);
     }
 

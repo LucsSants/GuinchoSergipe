@@ -27,8 +27,8 @@ public class VeiculoModel
 
     public int Ano { get; set; }
     
-    public int UsuarioId { get; set; }
-    public virtual UsuarioModel usuario { get; set; }
+    public string UserId { get; set; }
+    public virtual UserModel User { get; set; }
 
     public int? TipoVeiculoId { get; set; }
     public virtual TipoVeiculoModel TipoVeiculo { get; set; }

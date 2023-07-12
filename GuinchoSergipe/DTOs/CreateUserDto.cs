@@ -21,7 +21,11 @@ public class CreateUserDto
     [Required(ErrorMessage = "Campo Nome é obrigatório")]
     [StringLength(100, ErrorMessage = "Nome deve ter entre até 100 caracteres!")]
     public string Nome { get; set; }
-    
+    public int? EnderecoId { get; set; }
+    public bool? isGuincho { get; set; }
+    public bool? isDisponivel { get; set; }
+    public List<int>? TiposId { get; set; }
+
 
 
 }

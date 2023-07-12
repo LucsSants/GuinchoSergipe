@@ -9,6 +9,12 @@ public class UserProfile : Profile
     public UserProfile()
     {
         CreateMap<CreateUserDto, UserModel>();
+        CreateMap<UserModel, ReadUserDto>()
+            .ForMember(usuarioDto => usuarioDto.ReadEnderecoDto, opt => opt.MapFrom(usuario => usuario.Endereco));
+            
+        CreateMap<VeiculoModel, ReadVeiculoDto>();
+       
+
     }
 
 }

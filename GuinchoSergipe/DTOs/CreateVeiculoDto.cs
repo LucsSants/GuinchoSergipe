@@ -30,4 +30,5 @@ public class CreateVeiculoDto
     public int UsuarioId { get; set; }
     [Required(ErrorMessage = "Tipo de Veiculo é obrigatório")]
     public int TipoVeiculoId { get; set; }
+    public string UserId { get; set; }
 }
