@@ -23,4 +23,5 @@ public class UserModel : IdentityUser
     public bool? isDisponivel { get; set; }
 
     public virtual ICollection<User_TipoVeiculo> User_TiposVeiculo { get; set; }
+    
 }

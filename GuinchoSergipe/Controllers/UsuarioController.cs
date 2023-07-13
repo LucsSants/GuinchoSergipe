@@ -37,7 +37,7 @@ public class UsuarioController : ControllerBase
         var usuarioDto = _mapper.Map<ReadUsuarioDto>(usuario);
         return Ok(usuarioDto);
     }
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [HttpGet]
     public IEnumerable<ReadUsuarioDto> GetUsuarios([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {

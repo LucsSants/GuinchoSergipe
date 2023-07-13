@@ -10,6 +10,7 @@ public class VeiculoProfile : Profile
     {
         CreateMap<CreateVeiculoDto, VeiculoModel>();
         CreateMap<VeiculoModel, ReadVeiculoDto>();
+        CreateMap<UpdateVeiculoDto, VeiculoModel>();
         
     }
 }

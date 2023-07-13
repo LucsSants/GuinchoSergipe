@@ -10,10 +10,10 @@ namespace GuinchoSergipe.Controllers;
 [Route("[controller]")]
 public class EnderecoController : ControllerBase
 {
-    private UsuarioContext _context;
+    private UserDbContext _context;
     private IMapper _mapper;
 
-    public EnderecoController(UsuarioContext context, IMapper mapper)
+    public EnderecoController(UserDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

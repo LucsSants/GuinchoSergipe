@@ -119,13 +119,32 @@ public class UserService
 
     public async Task<List<ReadUserDto>> GetGuinchos()
     {
-        List<UserModel> resultado = await _userManager.Users.Where(user => user.isGuincho == true).ToListAsync();
+        List<UserModel> resultado = await _userManager.Users.Where(user => user.isGuincho == true && user.isDisponivel == true).ToListAsync();
         if (resultado != null)
         {
             var usuarioDto = _mapper.Map<List<ReadUserDto>>(resultado);
             return usuarioDto;
         }
         return null;
+
+    }
+    public async Task<string> changeUserStatus(string Id)
+    {
+        UserModel resultado = await _userManager.FindByIdAsync(Id);
+        if (resultado != null)
+        {
+           resultado.isDisponivel = !resultado.isDisponivel;
+           await _userManager.UpdateAsync(resultado);
+           return "Sucesso";
+        }
+        return "Usuario não encontado";
+
+    }
+    public async Task<bool?> getUserStatus(string Id)
+    {
+        UserModel resultado = await _userManager.FindByIdAsync(Id);
+        return resultado.isDisponivel;
+       
 
     }
 }

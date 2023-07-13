@@ -10,10 +10,10 @@ namespace GuinchoSergipe.Controllers;
 [Route("[controller]")]
 public class TipoVeiculoController : ControllerBase
 {
-    private UsuarioContext _context;
+    private UserDbContext _context;
     private IMapper _mapper;
 
-    public TipoVeiculoController(UsuarioContext context, IMapper mapper)
+    public TipoVeiculoController(UserDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

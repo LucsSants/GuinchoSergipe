@@ -3,6 +3,7 @@ using System;
 using GuinchoSergipe.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GuinchoSergipe.Migrations.UserDb
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230713020045_criandoSolicitacao")]
+    partial class criandoSolicitacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,11 +72,12 @@ namespace GuinchoSergipe.Migrations.UserDb
                     b.Property<string>("Long")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("SolicitacaoStatus")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("SoliitacaoHora")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserClienteId")
                         .IsRequired()
@@ -88,8 +92,6 @@ namespace GuinchoSergipe.Migrations.UserDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StatusId");
-
                     b.HasIndex("UserClienteId");
 
                     b.HasIndex("UserGuinchoId");
@@ -97,21 +99,6 @@ namespace GuinchoSergipe.Migrations.UserDb
                     b.HasIndex("VeiculoId");
 
                     b.ToTable("Solicitacoes");
-                });
-
-            modelBuilder.Entity("GuinchoSergipe.Models.SolicitacaoStatusModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SolicitacaoStatus");
                 });
 
             modelBuilder.Entity("GuinchoSergipe.Models.TipoVeiculoModel", b =>
@@ -412,12 +399,6 @@ namespace GuinchoSergipe.Migrations.UserDb
 
             modelBuilder.Entity("GuinchoSergipe.Models.SolicitacaoModel", b =>
                 {
-                    b.HasOne("GuinchoSergipe.Models.SolicitacaoStatusModel", "Status")
-                        .WithMany("Solicitacoes")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GuinchoSergipe.Models.UserModel", "UserCliente")
                         .WithMany()
                         .HasForeignKey("UserClienteId")
@@ -435,8 +416,6 @@ namespace GuinchoSergipe.Migrations.UserDb
                         .HasForeignKey("VeiculoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Status");
 
                     b.Navigation("UserCliente");
 
@@ -549,11 +528,6 @@ namespace GuinchoSergipe.Migrations.UserDb
                 {
                     b.Navigation("User")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("GuinchoSergipe.Models.SolicitacaoStatusModel", b =>
-                {
-                    b.Navigation("Solicitacoes");
                 });
 
             modelBuilder.Entity("GuinchoSergipe.Models.TipoVeiculoModel", b =>

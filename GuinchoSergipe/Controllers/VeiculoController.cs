@@ -54,4 +54,15 @@ public class VeiculoController : ControllerBase
     {
         return _mapper.Map<List<ReadVeiculoDto>>(_context.Veiculos.Skip(skip).Take(take).ToList());
     }
+
+    [HttpPut("{id}")]
+    public IActionResult AtualizarFilme(int id, [FromBody] UpdateVeiculoDto veiculoDto)
+    {
+        var filme = _context.Veiculos.FirstOrDefault(veiculo => veiculo.Id == id);
+        if (filme == null) { return NotFound("Usuáio não encontrado"); }
+        _mapper.Map(veiculoDto, filme);
+        _context.SaveChanges();
+        return Ok();
+    }
 }
+

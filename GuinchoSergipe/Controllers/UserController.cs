@@ -15,10 +15,12 @@ namespace GuinchoSergipe.Controllers;
 public class UserController : ControllerBase
 {
     private UserService _userService;
+    private UserManager<UserModel> _userManager;
 
-    public UserController(UserService userService)
+    public UserController(UserService userService, UserManager<UserModel> userManager)
     {
         _userService = userService;
+        _userManager = userManager;
     }
 
     [HttpPost("cadastro")]
@@ -88,6 +90,28 @@ public class UserController : ControllerBase
             return NotFound("Usuário não encontrado!");
         }
         return Ok(result);
+    }
+
+    [HttpGet("status/{id}")]
+    public async Task<IActionResult> getUserStatus(string id)
+    {
+        var result = await _userService.getUserStatus(id);
+        if (result == null)
+        {
+            return NotFound("Usuário não encontrado!");
+        }
+        return Ok(result);
+    }
+
+    [HttpPost("status/{id}")]
+    public async Task<IActionResult> changeUserStatus(string id)
+    {
+        var resultado = await _userService.changeUserStatus(id);
+        if (resultado == "Sucesso")
+        {
+            return Ok(resultado);
+        }
+        return NotFound(resultado);
     }
 
 }

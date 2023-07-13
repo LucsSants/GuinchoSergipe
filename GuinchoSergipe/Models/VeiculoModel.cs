@@ -33,4 +33,6 @@ public class VeiculoModel
     public int? TipoVeiculoId { get; set; }
     public virtual TipoVeiculoModel TipoVeiculo { get; set; }
 
+    public virtual ICollection<VeiculoModel> Veiculos { get; set; }
+
 }

@@ -27,6 +27,7 @@ public class UserDbContext : IdentityDbContext<UserModel>
     public DbSet<EnderecoModel> Enderecos { get; set; }
     public DbSet<VeiculoModel> Veiculos { get; set; }
     public DbSet<TipoVeiculoModel> TiposVeiculo { get; set; }
-
+    public DbSet<SolicitacaoModel> Solicitacoes { get; set; }
+    public DbSet<SolicitacaoStatusModel> SolicitacaoStatus { get; set; }
     public DbSet<User_TipoVeiculo> User_TiposVeiculo { get; set; }
 }
