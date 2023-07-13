@@ -2,6 +2,7 @@
 using GuinchoSergipe.DTOs;
 using GuinchoSergipe.Models;
 using GuinchoSergipe.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> CreateUsuarioGuincho(CreateUserDto userDto)
     {
         userDto.isGuincho = true;
-        userDto.isDisponivel = false;
+        userDto.isDisponivel = true;
         var result = await _userService.CadastraUsuarioGuincho(userDto);
         if (result != "Guincho Cadastrado!!!!!!!!")
         {
@@ -70,6 +71,7 @@ public class UserController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize]
     [HttpGet("id/{id}")]
     public async Task<IActionResult> GetUserById(string id)
     {
@@ -80,7 +82,7 @@ public class UserController : ControllerBase
         }
         return Ok(result);
     }
-
+    [Authorize]
     [HttpGet("guinchos")]
     public async Task<IActionResult> GetUserGuinchos()
     {
@@ -91,7 +93,7 @@ public class UserController : ControllerBase
         }
         return Ok(result);
     }
-
+    [Authorize]
     [HttpGet("status/{id}")]
     public async Task<IActionResult> getUserStatus(string id)
     {
@@ -102,7 +104,7 @@ public class UserController : ControllerBase
         }
         return Ok(result);
     }
-
+    [Authorize]
     [HttpPost("status/{id}")]
     public async Task<IActionResult> changeUserStatus(string id)
     {

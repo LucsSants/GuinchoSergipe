@@ -2,10 +2,12 @@
 using GuinchoSergipe.Data;
 using GuinchoSergipe.DTOs;
 using GuinchoSergipe.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuinchoSergipe.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class EnderecoController : ControllerBase

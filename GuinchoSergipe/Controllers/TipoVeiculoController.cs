@@ -2,6 +2,7 @@
 using GuinchoSergipe.Data;
 using GuinchoSergipe.DTOs;
 using GuinchoSergipe.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuinchoSergipe.Controllers;
@@ -18,7 +19,7 @@ public class TipoVeiculoController : ControllerBase
         _context = context;
         _mapper = mapper;
     }
-
+    [Authorize]
     [HttpPost]
     public IActionResult CreateTipoVeiculo([FromBody] CreateTipoVeiculoDto tipoVeiculoDto)
     {
@@ -27,7 +28,7 @@ public class TipoVeiculoController : ControllerBase
         _context.SaveChanges();
         return CreatedAtAction(nameof(GetTipoVeiculoById), new { id = tipoVeiculo.Id }, tipoVeiculo);
     }
-
+    [Authorize]
     [HttpGet("{id}")]
     public IActionResult GetTipoVeiculoById(int id)
     {

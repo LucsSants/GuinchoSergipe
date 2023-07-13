@@ -1,4 +1,5 @@
 ﻿using GuinchoSergipe.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -21,6 +22,29 @@ public class UserDbContext : IdentityDbContext<UserModel>
             .HasOne(u => u.TipoVeiculo)
             .WithMany(ut => ut.User_TiposVeiculo)
             .HasForeignKey(u => u.TipoVeiculoId);
+
+        modelBuilder.Entity<IdentityRole>().HasData(
+            new IdentityRole { Id = "1", Name = "CLIENTE", NormalizedName = "CLIENTE".ToUpper() },
+            new IdentityRole { Id = "2", Name = "GUINCHO", NormalizedName = "GUINCHO".ToUpper() },
+            new IdentityRole { Id = "3", Name = "ADMIN", NormalizedName = "ADMIN".ToUpper() }
+            ) ;
+
+        modelBuilder.Entity<TipoVeiculoModel>().HasData(
+           new TipoVeiculoModel { Id = 1, TipoNome = "Motocicleta"},
+           new TipoVeiculoModel { Id = 2, TipoNome = "Carro" }
+           
+           );
+
+        modelBuilder.Entity<SolicitacaoStatusModel>().HasData(
+          new SolicitacaoStatusModel { Id = 1, Status = "PENDENTE" },
+          new SolicitacaoStatusModel { Id = 2, Status = "EM_ANDAMENTO"},
+          new SolicitacaoStatusModel { Id = 3, Status = "RECUSADO" },
+          new SolicitacaoStatusModel { Id = 4, Status = "SEM_RESPOSTA" },
+          new SolicitacaoStatusModel { Id = 5, Status = "CONCLUIDO" }
+          );
+
+
+
 
         base.OnModelCreating(modelBuilder);
     }

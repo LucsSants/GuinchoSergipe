@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GuinchoSergipe.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class SolicitacaoController : ControllerBase
